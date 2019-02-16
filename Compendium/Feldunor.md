@@ -1,0 +1,3 @@
+# Feldunor - The Accursed Caves
+
+In the common Dwarven tongue, "Feldunor" means Accursed Caves. It is an ancient site, speculated to have been a massive underground city, but is now a network of dungeons, caverns, and crawlways. It is infested in the upper levels by brutish orcs, and deep down it is said that demons roam the ancient halls, practicing evil and forgotten magics. Nevertheless, many explorer find visions of Feldunor invade their dreams and thoughts; they feel a presence calling to them. Like moths to a flame, they are seduced by a voice telling them of the potential for treasure that could enhance their power, and let them ascend into godhood.
