@@ -22,3 +22,14 @@ Note: Controls are case sensitive
 | Help | ? |
 | Continue | Space |
 | Quit | Q |
+
+
+# Compiling
+
+After downloading, go into the src directory and run the makefile:
+
+    $ make
+
+Then you can launch the game in the terminal:
+
+    $ ./Feldunor
