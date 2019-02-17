@@ -6,7 +6,7 @@ A simple roguelike game made from scratch in C++. It is an amateur project with 
 The game is currently a work in progress and does not work yet.
 
 # Controls  
-[Controls are case sensitive]
+Note: Controls are case sensitive
 
 #### Movement/Attacking Directions
 | | | |
