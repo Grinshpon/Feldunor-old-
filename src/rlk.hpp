@@ -94,16 +94,7 @@ class Map {
         static const int WIDTH = 80; //80: default terminal screen width
         static const int HEIGHT = 20; //20: 24 minus four lines of text for console (so that default terminal screen compatible)
         int depth;
-        char mapData[HEIGHT][WIDTH] = //REPLACE WITH RANDOM ALGORITHM LATER
-        {// (Y,X)
-            {'-','-','-','-','-','-','-'},
-            {'|','.','.','.','.','.','|'},
-            {'|','.','.','.','.','.','.','#','#','#'},
-            {'|','.','.','.','.','.','|',' ',' ','#'},
-            {'|','.','.','.','.','.','|'},
-            {'|','.','.','.','.','.','|'},
-            {'-','-','-','-','-','-','-'},
-        };
+        char *mapData = new char[HEIGHT*WIDTH];
         int *seed;
         void genSeed(int depth) {
             seed = GenerateMap(WIDTH,HEIGHT);
@@ -113,22 +104,22 @@ class Map {
                 for(int j = 0; j < WIDTH; j++) {
                     switch (seed[WIDTH*i+j]) {
                         case empty:
-                            mapData[i][j] = ' ';
+                            mapData[WIDTH*i+j] = ' ';
                             break;
                         case vWall:
-                            mapData[i][j] = '|';
+                            mapData[WIDTH*i+j] = '|';
                             break;
                         case hWall:
-                            mapData[i][j] = '-';
+                            mapData[WIDTH*i+j] = '-';
                             break;
                         case room:
-                            mapData[i][j] = '.';
+                            mapData[WIDTH*i+j] = '.';
                             break;
                         case hall:
-                            mapData[i][j] = '#';
+                            mapData[WIDTH*i+j] = '#';
                             break;
                         case door:
-                            mapData[i][j] = '+';
+                            mapData[WIDTH*i+j] = '+';
                             break;
                         default:
                             break;
@@ -138,6 +129,7 @@ class Map {
         }
 	~Map() {
 	    delete[] seed;
+	    delete[] mapData;
 	}
 };
 
@@ -240,8 +232,8 @@ class Living: public Entity {
 
 class AIHandler {
     public:
-        void moveLiving(Map& map, Living& living, int modY, int modX) {
-                if(walkable.find(map.mapData[living.y-modY][living.x-modX]) != std::string::npos) {
+        void moveLiving(Map& map, Living& living, int modY, int modX) {//check later
+                if(walkable.find(map.mapData[map.WIDTH*living.y-modY+living.x-modX]) != std::string::npos) {
                     living.y -= modY;
                     living.x -= modX;
                 }

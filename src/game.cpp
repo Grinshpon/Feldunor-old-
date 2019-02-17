@@ -15,6 +15,7 @@ int getch(void);
 int getInput();
 int Start();
 int Update();
+
 string inputYes = "Yy";
 Map *gameMap = new Map();
 
@@ -27,7 +28,6 @@ int Start() {
 int Update() {
     int updateStatus = 0;
     updateStatus = getInput();
-    delete gameMap; // TESTING
     return updateStatus;
 }
 
@@ -37,16 +37,23 @@ int Draw() {
     return drawStatus;
 }
 
+int Quit() {
+    int quitStatus = 0;
+    delete gameMap;
+    return quitStatus;
+}
+
 
 // Input Handler (put in different file or keep it here?)
 
 int getInput() {
-    int input = getch();
+    int input = getch(); 
     switch(input) {
 	case 'Q'://just copy how it works in rudie
 	    printf("Quit? y/N");
 	    input = getch();
 	    if (inputYes.find(input) != string::npos) {
+		Quit();
 		clearScreen();
 		return 10;
 	    }
