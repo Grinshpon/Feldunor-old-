@@ -16,12 +16,12 @@ Note: Controls are case sensitive
 | b | j | n |
 
 #### Other Commands
-| Command | Key |
-|---|---|
-| Character Sheet | C |
-| Help | ? |
-| Continue | Space |
-| Quit | Q |
+| Command         | Key   |
+|-----------------|-------|
+| Character Sheet | C     |
+| Help            | ?     |
+| Continue        | Space |
+| Quit            | Q     |
 
 
 # Compiling
