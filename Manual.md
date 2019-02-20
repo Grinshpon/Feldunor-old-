@@ -1,6 +1,7 @@
 # Feldunor Manaul
 
-### NPC's
+## References
+#### NPC's
 | Symbol | Enemy         |
 | ------ | ------------- |
 | r      | Large Rat     |
@@ -16,11 +17,12 @@
 | I      | Imp           |
 | D      | Demon         |
 
-### Items
+#### Items
 | Symbol | Item |
 | ------ | ---- |
 | $      | Gold |
 
+## Controls
 #### Movement/Attacking Directions
 | | | |
 |-|-|-|
@@ -28,7 +30,7 @@
 | h | @ | l |
 | b | j | n |
 
-### Commands
+#### Commands
 | Command         | Key   |
 |-----------------|-------|
 | Character Sheet | C     |
