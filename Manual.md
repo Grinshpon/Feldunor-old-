@@ -1,5 +1,7 @@
-# NPC's
-| symbol | Enemy         |
+# Feldunor Manaul
+
+### NPC's
+| Symbol | Enemy         |
 | ------ | ------------- |
 | r      | Large Rat     |
 | g      | Goblin        |
@@ -14,7 +16,15 @@
 | I      | Imp           |
 | D      | Demon         |
 
-# Items
-| symbol | Item |
+### Items
+| Symbol | Item |
 | ------ | ---- |
 | $      | Gold |
+
+### Commands
+| Command         | Key   |
+|-----------------|-------|
+| Character Sheet | C     |
+| Help            | ?     |
+| Continue        | Space |
+| Quit            | Q     |
