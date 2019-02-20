@@ -1,4 +1,4 @@
-# Feldunor Manaul
+# Feldunor Manual
 
 ## References
 ### NPC's
