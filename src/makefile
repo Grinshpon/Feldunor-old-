@@ -1,9 +1,10 @@
 CC=g++
-DEPS = draw.hpp rlk.hpp mapgen.hpp
-OBJ = main.cpp game.cpp
+CFLAGS= -lncurses
+DEPS = rlk.hpp mapgen.hpp
+OBJ = main.cpp game.cpp draw.cpp
 
 %.o: %.c $(DEPS)
-		$(CC) -c -o $@ $<
+		$(CC) -c -o $@ $< $(CFLAGS)
 
 Feldunor: $(OBJ)
-		$(CC) -o $@ $^
+		$(CC) -o $@ $^ $(CFLAGS)

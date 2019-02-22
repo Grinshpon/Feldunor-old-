@@ -2,9 +2,15 @@
 #include<unistd.h>
 #include<termios.h>
 #include<iostream>
-#include "draw.hpp"
 #include "rlk.hpp"
+#include<vector>
+using std::vector;
 using std::string;
+
+extern int clearScreen();
+extern int initScreen();
+extern int drawScreen(string statBar, char* world, int w, int h, string actions);
+extern int exitCurse();
 
 enum commands {
     quitGame,
@@ -15,13 +21,21 @@ int getch(void);
 int getInput();
 int Start();
 int Update();
+int Draw();
+int Quit();
 
-string inputYes = "Yy";
+string inputYes("Yy");
 Map *gameMap = new Map();
+string topBar("");
+string bottomBar("");
+
 
 int Start() {
     int startStatus = 0;
+    startStatus = initScreen();
     startStatus = clearScreen();
+    gameMap->genSeed(0);
+    gameMap->buildLevel();
     return startStatus;
 }
 
@@ -33,12 +47,13 @@ int Update() {
 
 int Draw() {
     int drawStatus = 0;
-    drawStatus = drawScreen();
+    drawStatus = drawScreen(topBar,gameMap->mapData,gameMap->WIDTH,gameMap->HEIGHT,bottomBar);
     return drawStatus;
 }
 
 int Quit() {
     int quitStatus = 0;
+    quitStatus = exitCurse();
     delete gameMap;
     return quitStatus;
 }

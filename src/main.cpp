@@ -1,4 +1,4 @@
-#include<stdlib.h>
+#include<iostream>
 #include<stdio.h>
 extern int Start();
 extern int Update();
@@ -13,11 +13,15 @@ int checkStatus(int es) {
     }
 }
 
-int main(void) {
+int main() {
     int exit_status = 0;
     //exit_status code: 10 - quit game 1 - error 0 - normal
     
+    //printf("  \\  /  |    |\\        | / ");
+    //printf("testing");
     exit_status = Start();
+    checkStatus(exit_status);
+    exit_status = Draw();
     checkStatus(exit_status);
     for(;;) {
 	exit_status = Update();

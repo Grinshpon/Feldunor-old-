@@ -1,5 +1,5 @@
-#ifndef MAPGEN_H
-#define MAPGEN_H
+#ifndef MAPGEN_HPP
+#define MAPGEN_HPP
 
 //Might be necessary, might put mapGen code into Map object (?)
 
