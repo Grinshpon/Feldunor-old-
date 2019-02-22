@@ -1,5 +1,5 @@
-#ifndef RLKLIB_H
-#define RLKLIB_H
+#ifndef RLKLIB_HPP
+#define RLKLIB_HPP
 
 #include <math.h>
 #include "mapgen.hpp"
@@ -33,7 +33,7 @@ enum consoleMessage {
 };
 
 std::string CONSOLE[consoleMessageMax] = {
-    "RudiE v 0.1.2 (Press '?' for help)",
+    "Feldunor v 0.0.1 (Press '?' for help)",
     "Enter Command: ",
     "Are you sure you want to quit? y/N\n",
     "Move North",
