@@ -107,7 +107,7 @@ struct Door {
     int id;
 };
 
-class Map {
+class Map {//to deprecate
     public:
         static const int WIDTH = 80; //80: default terminal screen width
         static const int HEIGHT = 20; //20: 24 minus four lines of text for console (so that default terminal screen compatible)
@@ -156,12 +156,16 @@ class Map {
 	}
 };
 
-class Map_prime {
+class World {//replace map class (will also handle putting entities on map)
     public:
 	static const int WIDTH = 80;
 	static const int HEIGHT = 20;
-	int depth = 0;
-	char *flatMap = new char[WIDTH*HEIGHT];
+	int depth;
+	char *flatMap = NULL;
+	World() {
+	    depth = 0;
+	    flatMap = new char[WIDTH*HEIGHT];
+	}
     private:
 	array<int,(WIDTH*HEIGHT)> mapData{};
 	vector<Room> rooms;
@@ -182,7 +186,7 @@ class Map_prime {
 	    }
 	}
 
-	~Map_prime() {
+	~World() {
 	    delete[] flatMap;
 	}
 
