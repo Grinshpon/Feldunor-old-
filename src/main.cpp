@@ -19,6 +19,8 @@ int main() {
     
     //printf("  \\  /  |    |\\        | / ");
     //printf("testing");
+    //
+    srand(time(NULL));
     exit_status = Start();
     checkStatus(exit_status);
     exit_status = Draw();

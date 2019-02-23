@@ -2,7 +2,11 @@
 #define RLKLIB_HPP
 
 #include <math.h>
+#include <vector>//replacing with std array
+#include <array>
 #include "mapgen.hpp"
+using std::vector;
+using std::array;
 
 std::string walkable = ".#+";
 int consoleQueue[10];
@@ -33,7 +37,7 @@ enum consoleMessage {
 };
 
 std::string CONSOLE[consoleMessageMax] = {
-    "Feldunor v 0.0.1 (Press '?' for help)",
+    "Feldunor v 0.0.1-4 (Press '?' for help)",
     "Enter Command: ",
     "Are you sure you want to quit? y/N\n",
     "Move North",
@@ -89,14 +93,33 @@ enum livingEntityStats {
     MAX
 };
 
+struct Point {
+    int x;
+    int y;
+};
+struct Room {
+    Point origin;
+    int height;
+    int width;
+};
+struct Door {
+    Point origin;
+    int id;
+};
+
 class Map {
     public:
         static const int WIDTH = 80; //80: default terminal screen width
         static const int HEIGHT = 20; //20: 24 minus four lines of text for console (so that default terminal screen compatible)
         int depth;
         char *mapData = new char[HEIGHT*WIDTH];
-        int *seed;
+        int *seed = NULL;
+	bool nullseed = true;
         void genSeed(int depth) {
+	    if(!nullseed)
+		delete[] seed;
+	    else
+		nullseed = false;
             seed = GenerateMap(WIDTH,HEIGHT);
         }
         void buildLevel() {
@@ -131,6 +154,38 @@ class Map {
 	    delete[] seed;
 	    delete[] mapData;
 	}
+};
+
+class Map_prime {
+    public:
+	static const int WIDTH = 80;
+	static const int HEIGHT = 20;
+	int depth = 0;
+	char *flatMap = new char[WIDTH*HEIGHT];
+    private:
+	array<int,(WIDTH*HEIGHT)> mapData{};
+	vector<Room> rooms;
+	void generateDoors(int id) {
+	    //generate door for room(id)
+	}
+	void generateRooms() {
+	    //generate rooms
+	}
+    public:
+	void generateMap() {
+	    //generate map layout
+	    //using generateRooms and generateDoors
+	    int numofRooms = rand()%4+4;
+	    for(int i = 0; i <= numofRooms; i++) {
+		int x = 0, y = 0;//randomize
+		rooms.push_back({{x,y},5,5});
+	    }
+	}
+
+	~Map_prime() {
+	    delete[] flatMap;
+	}
+
 };
 
 class Entity {

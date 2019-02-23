@@ -1,6 +1,8 @@
 #ifndef MAPGEN_HPP
 #define MAPGEN_HPP
 
+#include<vector>
+using std::vector;
 //Might be necessary, might put mapGen code into Map object (?)
 
 enum mapGenSymbols {
@@ -33,5 +35,15 @@ int *GenerateMap(int width, int height) {
     }
     return level;
 }
+//decide whether to use vector or int*, and also work out map generation algorithm
+/*vector<int> GenerateMap_vec(int width, int height) {
+    vector<int> level(width*height,0);
+    srand(time(NULL));
+    
+    int wsize = rand()&7+5, hsize = rand()%6+5;
+    int x = rand()%(width - wsize), y = rand()%(height - hsize);
+
+    return level;
+}*/
 
 #endif
