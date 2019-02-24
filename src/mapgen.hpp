@@ -9,7 +9,7 @@ enum mapGenSymbols {
     empty, // nothing
     vWall, // vertical wall |
     hWall, // horizontal wall -
-    room, // room space .
+    mapRoom, // room space .
     hall, // hallway #
     door, // door +
     mapGenMax
@@ -30,7 +30,7 @@ int *GenerateMap(int width, int height) {
             else if(i == 0 || i == (wsize-1))
                 level[(y+j)*width+(x+i)] = vWall;
             else
-                level[(y+j)*width+(x+i)] = room;
+                level[(y+j)*width+(x+i)] = mapRoom;
         }
     }
     return level;

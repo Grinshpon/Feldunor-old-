@@ -18,8 +18,7 @@ int main() {
     //exit_status code: 10 - quit game 1 - error 0 - normal
     
     //printf("  \\  /  |    |\\        | / ");
-    //printf("testing");
-    //
+    printf("testing");
     srand(time(NULL));
     exit_status = Start();
     checkStatus(exit_status);

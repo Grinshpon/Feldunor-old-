@@ -2,7 +2,7 @@
 #define RLKLIB_HPP
 
 #include <math.h>
-#include <vector>//replacing with std array
+#include <vector>
 #include <array>
 #include "mapgen.hpp"
 using std::vector;
@@ -37,7 +37,7 @@ enum consoleMessage {
 };
 
 std::string CONSOLE[consoleMessageMax] = {
-    "Feldunor v 0.0.1-4 (Press '?' for help)",
+    "Feldunor v 0.0.2 (Press '?' for help)",
     "Enter Command: ",
     "Are you sure you want to quit? y/N\n",
     "Move North",
@@ -135,7 +135,7 @@ class Map {//to deprecate
                         case hWall:
                             mapData[WIDTH*i+j] = '-';
                             break;
-                        case room:
+                        case mapRoom:
                             mapData[WIDTH*i+j] = '.';
                             break;
                         case hall:
@@ -160,7 +160,7 @@ class World {//replace map class (will also handle putting entities on map)
     public:
 	static const int WIDTH = 80;
 	static const int HEIGHT = 20;
-	int depth;
+	int depth;//will be used later to determine difficulty
 	char *flatMap = NULL;
 	World() {
 	    depth = 0;
@@ -172,18 +172,87 @@ class World {//replace map class (will also handle putting entities on map)
 	void generateDoors(int id) {
 	    //generate door for room(id)
 	}
+	bool checkCollision(int x1, int y1, int h1, int w1, int i) {
+	    int x0 = rooms.at(i).origin.x, y0 = rooms.at(i).origin.y, h0 = rooms.at(i).height, w0 = rooms.at(i).width;
+	    return !(y1 > y0 + h0 || y1 < y0 - h1 || x1 > x0 + w0 || x1 < x0 - w1);//true if collision, false if no collision
+	}
 	void generateRooms() {
 	    //generate rooms
+	    //printf("planning rooms"); //debug
+	    int numofRooms = rand()%4+4;
+	    for(int i = 0; i <= numofRooms; i++) {
+		int attempt = 0;
+		bool iterAttempt = false;
+		int height = rand()%7+5, width = rand()%8+5;
+		int x = rand()%(WIDTH-width), y = rand()%(HEIGHT-height);
+		if(i > 0) {
+		    while(attempt != -1 && attempt < 10) {// -1 means successfull formation
+			for(int rs = 0; rs < rooms.size(); rs++) {
+			    iterAttempt = checkCollision(x,y,height,width,rs);
+			    if (iterAttempt)
+				break;
+			}
+			if (iterAttempt) {
+			    ++attempt;
+			    height = rand()%7+5;
+			    width = rand()%8+5;
+			    x = rand()%(WIDTH-width);
+			    y = rand()%(HEIGHT-height);
+			}
+			else attempt = -1;
+		    }
+		}
+		if(attempt < 10)
+		    rooms.push_back({{x,y},height,width});
+	    }
 	}
     public:
 	void generateMap() {
 	    //generate map layout
 	    //using generateRooms and generateDoors
-	    int numofRooms = rand()%4+4;
-	    for(int i = 0; i <= numofRooms; i++) {
-		int x = 0, y = 0;//randomize
-		rooms.push_back({{x,y},5,5});
+	    generateRooms();
+	    //printf("digging dungeon...");
+	    for(int i = 0; i < rooms.size(); i++) {
+		for(int j = 0; j < rooms.at(i).height; j++) {
+		    for(int k = 0; k < rooms.at(i).width; k++) {
+			if(j == 0 || j == (rooms.at(i).height-1))
+			    mapData.at((rooms.at(i).origin.y+j)*WIDTH+(rooms.at(i).origin.x+k))=hWall;
+			else if (k == 0 || k == (rooms.at(i).width-1))
+			    mapData.at((rooms.at(i).origin.y+j)*WIDTH+(rooms.at(i).origin.x+k))=vWall;
+			else
+			    mapData.at((rooms.at(i).origin.y+j)*WIDTH+(rooms.at(i).origin.x+k))=mapRoom;
+		    }
+		}
 	    }
+	}
+	void flattenMap() {
+	    //turn mapData into flatMap
+	    for(int i = 0; i < HEIGHT; i++) {
+                for(int j = 0; j < WIDTH; j++) {
+                    switch (mapData.at(WIDTH*i+j)) {
+                        case empty:
+                            flatMap[WIDTH*i+j] = ' ';
+                            break;
+                        case vWall:
+                            flatMap[WIDTH*i+j] = '|';
+                            break;
+                        case hWall:
+                            flatMap[WIDTH*i+j] = '-';
+                            break;
+                        case mapRoom:
+                            flatMap[WIDTH*i+j] = '.';
+                            break;
+                        case hall:
+                            flatMap[WIDTH*i+j] = '#';
+                            break;
+                        case door:
+                            flatMap[WIDTH*i+j] = '+';
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
 	}
 
 	~World() {

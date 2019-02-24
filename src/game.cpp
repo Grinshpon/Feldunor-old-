@@ -25,7 +25,7 @@ int Draw();
 int Quit();
 
 string inputYes("Yy");
-Map *gameMap = new Map();
+World *gameWorld = new World();
 string topBar("");
 string bottomBar("");
 
@@ -34,8 +34,8 @@ int Start() {
     int startStatus = 0;
     startStatus = initScreen();
     startStatus = clearScreen();
-    gameMap->genSeed(0);
-    gameMap->buildLevel();
+    gameWorld->generateMap();
+    gameWorld->flattenMap();
     return startStatus;
 }
 
@@ -47,14 +47,14 @@ int Update() {
 
 int Draw() {
     int drawStatus = 0;
-    drawStatus = drawScreen(topBar,gameMap->mapData,gameMap->WIDTH,gameMap->HEIGHT,bottomBar);
+    drawStatus = drawScreen(topBar,gameWorld->flatMap,gameWorld->WIDTH,gameWorld->HEIGHT,bottomBar);
     return drawStatus;
 }
 
 int Quit() {
     int quitStatus = 0;
     quitStatus = exitCurse();
-    delete gameMap;
+    delete gameWorld;
     return quitStatus;
 }
 
