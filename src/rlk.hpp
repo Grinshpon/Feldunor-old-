@@ -37,7 +37,7 @@ enum consoleMessage {
 };
 
 std::string CONSOLE[consoleMessageMax] = {
-    "Feldunor v 0.0.2 (Press '?' for help)",
+    "Feldunor v 0.0.2-1 (Press '?' for help)",
     "Enter Command: ",
     "Are you sure you want to quit? y/N\n",
     "Move North",
@@ -155,7 +155,7 @@ class Map {//to deprecate
 	    delete[] mapData;
 	}
 };
-
+// World Class will also contain vector or list of entities on map, as well as pathfinding algo (A*)
 class World {//replace map class (will also handle putting entities on map)
     public:
 	static const int WIDTH = 80;
@@ -169,12 +169,30 @@ class World {//replace map class (will also handle putting entities on map)
     private:
 	array<int,(WIDTH*HEIGHT)> mapData{};
 	vector<Room> rooms;
+	vector<Door> doors;
+
+	void AStar(Point origin, Point target) {//for generating hallways and entity pathfinding (entities will reside in world class) (remember to remove comments for myself) (chicken butt)
+	    //not sure yet, maybe return linked list / path?
+	}
+	void generateHalls() {
+	    //generate halls for each door leading to another door of different room(id) using A*
+	}
 	void generateDoors(int id) {
-	    //generate door for room(id)
+	    //printf(" %d",id);
+	    int numofDoors = rand()%3+1;
+	    for(int i = 0; i < numofDoors; i++) {
+		if(rand()%2 == 0)
+		    doors.push_back({{rooms.at(id).origin.x+(rand()%2)*(rooms.at(id).width-1),rooms.at(id).origin.y+1+(rand()%(rooms.at(id).height-2))},id});
+		else {
+		    doors.push_back({{rooms.at(id).origin.x+1+(rand()%(rooms.at(id).width-2)),rooms.at(id).origin.y+(rand()%2)*(rooms.at(id).height-1)},id});
+		}
+		mapData.at(WIDTH*doors.back().origin.y+doors.back().origin.x) = door;
+		//printf( "(%d:%d:{%d,%d}), ",id,i,doors.at(i).origin.x,doors.at(i).origin.y);
+	    }
 	}
 	bool checkCollision(int x1, int y1, int h1, int w1, int i) {
 	    int x0 = rooms.at(i).origin.x, y0 = rooms.at(i).origin.y, h0 = rooms.at(i).height, w0 = rooms.at(i).width;
-	    return !(y1 > y0 + h0 || y1 < y0 - h1 || x1 > x0 + w0 || x1 < x0 - w1);//true if collision, false if no collision
+	    return !(y1 > y0 + h0+1 || y1 < y0 - (h1+1) || x1 > x0 + w0+1 || x1 < x0 - (w1+1));//true if collision, false if no collision
 	}
 	void generateRooms() {
 	    //generate rooms
@@ -184,7 +202,7 @@ class World {//replace map class (will also handle putting entities on map)
 		int attempt = 0;
 		bool iterAttempt = false;
 		int height = rand()%7+5, width = rand()%8+5;
-		int x = rand()%(WIDTH-width), y = rand()%(HEIGHT-height);
+		int x = 1+rand()%(WIDTH-(width+1)), y = 1+rand()%(HEIGHT-(height+1));
 		if(i > 0) {
 		    while(attempt != -1 && attempt < 10) {// -1 means successfull formation
 			for(int rs = 0; rs < rooms.size(); rs++) {
@@ -196,8 +214,8 @@ class World {//replace map class (will also handle putting entities on map)
 			    ++attempt;
 			    height = rand()%7+5;
 			    width = rand()%8+5;
-			    x = rand()%(WIDTH-width);
-			    y = rand()%(HEIGHT-height);
+			    x = 1+rand()%(WIDTH-(width+1));
+			    y = 1+rand()%(HEIGHT-(height+1));
 			}
 			else attempt = -1;
 		    }
@@ -212,6 +230,7 @@ class World {//replace map class (will also handle putting entities on map)
 	    //using generateRooms and generateDoors
 	    generateRooms();
 	    //printf("digging dungeon...");
+	    //printf("%d",rooms.size());
 	    for(int i = 0; i < rooms.size(); i++) {
 		for(int j = 0; j < rooms.at(i).height; j++) {
 		    for(int k = 0; k < rooms.at(i).width; k++) {
@@ -223,7 +242,9 @@ class World {//replace map class (will also handle putting entities on map)
 			    mapData.at((rooms.at(i).origin.y+j)*WIDTH+(rooms.at(i).origin.x+k))=mapRoom;
 		    }
 		}
+		generateDoors(i);
 	    }
+	    generateHalls();
 	}
 	void flattenMap() {
 	    //turn mapData into flatMap
