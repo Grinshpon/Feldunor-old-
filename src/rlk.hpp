@@ -1,5 +1,5 @@
-#ifndef RLKLIB_HPP
-#define RLKLIB_HPP
+#ifndef RLK_HPP
+#define RLK_HPP
 
 #include <math.h>
 #include <vector>
