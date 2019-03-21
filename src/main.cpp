@@ -1,3 +1,5 @@
+//Feldunor v0.0.2-2
+//By: Daniel Grinshpon
 #include<iostream>
 #include<stdio.h>
 extern int Start();

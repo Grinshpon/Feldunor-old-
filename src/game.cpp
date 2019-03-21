@@ -24,6 +24,8 @@ int Update();
 int Draw();
 int Quit();
 
+int input;
+
 string inputYes("Yy");
 World *gameWorld = new World();
 string topBar("");
@@ -40,8 +42,10 @@ int Start() {
 }
 
 int Update() {
+    bottomBar = "";
     int updateStatus = 0;
     updateStatus = getInput();
+    bottomBar += input;
     return updateStatus;
 }
 
@@ -62,10 +66,10 @@ int Quit() {
 // Input Handler (put in different file or keep it here?)
 
 int getInput() {
-    int input = getch(); 
+    input = getch(); 
     switch(input) {
 	case 'Q'://just copy how it works in rudie
-	    printf("Quit? y/N");
+	    printf(" Quit? y/N");
 	    input = getch();
 	    if (inputYes.find(input) != string::npos) {
 		Quit();

@@ -27,7 +27,7 @@ int initScreen() {
 int drawScreen(string statBar, char* world, int w, int h, string actions) { //will take char* 's and print them in the terminal
     int status = clearScreen();
     addstr(statBar.c_str());
-    addch(ACS_ULCORNER);//REMOVE
+    //addch(ACS_ULCORNER);//REMOVE
     addch('\n');
     /*for(int i = 0, count=0; i < w*h; i++,count++) {
 	if (count == w) {
