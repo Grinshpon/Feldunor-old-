@@ -2,8 +2,8 @@
 #include<unistd.h>
 #include<termios.h>
 #include<iostream>
-#include "rlk.hpp"
 #include<vector>
+#include "rlk.hpp"
 using std::vector;
 using std::string;
 
@@ -33,54 +33,54 @@ string bottomBar("");
 
 
 int Start() {
-    int startStatus = 0;
-    startStatus = initScreen();
-    startStatus = clearScreen();
-    gameWorld->generateMap();
-    gameWorld->flattenMap();
-    return startStatus;
+  int startStatus = 0;
+  startStatus = initScreen();
+  startStatus = clearScreen();
+  gameWorld->generateMap();
+  gameWorld->flattenMap();
+  return startStatus;
 }
 
 int Update() {
-    bottomBar = "";
-    int updateStatus = 0;
-    updateStatus = getInput();
-    bottomBar += input;
-    return updateStatus;
+  bottomBar = "";
+  int updateStatus = 0;
+  updateStatus = getInput();
+  bottomBar += input;
+  return updateStatus;
 }
 
 int Draw() {
-    int drawStatus = 0;
-    drawStatus = drawScreen(topBar,gameWorld->flatMap,gameWorld->WIDTH,gameWorld->HEIGHT,bottomBar);
-    return drawStatus;
+  int drawStatus = 0;
+  drawStatus = drawScreen(topBar,gameWorld->flatMap,WIDTH,HEIGHT,bottomBar);
+  return drawStatus;
 }
 
 int Quit() {
-    int quitStatus = 0;
-    quitStatus = exitCurse();
-    delete gameWorld;
-    return quitStatus;
+  int quitStatus = 0;
+  quitStatus = exitCurse();
+  delete gameWorld;
+  return quitStatus;
 }
 
 
 // Input Handler (put in different file or keep it here?)
 
 int getInput() {
-    input = getch(); 
-    switch(input) {
-	case 'Q'://just copy how it works in rudie
-	    printf(" Quit? y/N");
-	    input = getch();
-	    if (inputYes.find(input) != string::npos) {
-		Quit();
-		clearScreen();
-		return 10;
-	    }
-	    break;
-	default:
-	    break;
-    }
-    return 0;
+  input = getch();
+  switch(input) {
+    case 'Q'://just copy how it works in rudie
+      printf(" Quit? y/N");
+      input = getch();
+      if (inputYes.find(input) != string::npos) {
+        Quit();
+        clearScreen();
+        return 10;
+      }
+      break;
+    default:
+      break;
+  }
+  return 0;
 }
 
 int getch(void) {
